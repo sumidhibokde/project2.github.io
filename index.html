@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quiz App</title>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+  
+  <style>
+    body {
+      font-family: bold;
+    }
+
+    p{
+      font-size: 40px;
+      background-color: #ddebd8;
+    color: red;
+    border: 4px solid black;
+    cursor: pointer;
+    border-radius: 10px;
+    margin-top: 30px;
+    padding: 20px 20px;
+
+    }
+
+    .quiz-container {
+      max-width: 500px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .question {
+      font-size: 40px;
+      margin-bottom: 30px;
+    }
+    .options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .option {
+      margin-bottom: 30px;
+      font-size: 20px;
+      background-color: #94c5d4;
+    }
+
+    button{
+      font-size: 30px;
+      color: red;
+      background-color: #ddebd8; 
+      margin-top: 20px;
+    }
+    .correct {
+      color: green;
+    }
+
+    .incorrect {
+      color: red;
+    }
+
+
+  </style>
+</head>
+<body>
+  <div class="quiz-container">
+    <p>Quiz Competition</p>
+    <div class="question" id="question">Question goes here</div>
+    <div class="options" id="options">
+      <!-- Options will be added dynamically -->
+    </div>
+    <div id="feedback" class="feedback"></div>
+    <button onclick="nextQuestion()">Next<i class="bi bi-arrow-right"></i></button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: " Q.1 What is the capital of France?",
+        options: ["Paris", "London", "Berlin", "Madrid"],
+        answer: "Paris"
+      },
+      {
+        question: "Q.2 What is 2 + 2?",
+        options: ["3", "4", "5", "6"],
+        answer: "4"
+      },
+       {
+        question: " Q.3 Golden Temple is located in?",
+        options: ["Amritsar", "Mumbai", "Goa", "Delhi"],
+        answer: "Amritsar"
+      },
+       {
+        question: " Q.4 Jagannath temple is located in which state?",
+        options: ["Assam", "Kerala", "Punjab", "Odisha"],
+        answer: "Odisha"
+      },
+      {
+        question: "Q.5 Which planet is known as the Red Planet?",
+        options: ["Earth", "Mars", "Venus", "Jupiter"],
+        answer: "Mars"
+      }
+    ];
+
+    let currentQuestionIndex = 0;
+    const questionElement = document.getElementById('question');
+    const optionsElement = document.getElementById('options');
+    const feedbackElement = document.getElementById('feedback');
+
+    function showQuestion() {
+      const currentQuestion = questions[currentQuestionIndex];
+      questionElement.textContent = currentQuestion.question;
+      optionsElement.innerHTML = '';
+      currentQuestion.options.forEach(option => {
+        const button = document.createElement('button');
+        button.textContent = option;
+        button.classList.add('option');
+        button.onclick = () => checkAnswer(option);
+        optionsElement.appendChild(button);
+      });
+    }
+
+    
+
+
+
+function checkAnswer(selectedOption) {
+  const currentQuestion = questions[currentQuestionIndex];
+  if (selectedOption === currentQuestion.answer) {
+    feedbackElement.textContent = "Correct!";
+    feedbackElement.classList.remove("incorrect");
+    feedbackElement.classList.add("correct");
+  } else {
+    feedbackElement.textContent = "Incorrect. The correct answer is: " + currentQuestion.answer;
+    feedbackElement.classList.remove("correct");
+    feedbackElement.classList.add("incorrect");
+  }
+}
+
+
+
+    function nextQuestion() {
+      feedbackElement.textContent = '';
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        showQuestion();
+      } else {
+        questionElement.textContent = 'Quiz Finished!';
+        optionsElement.innerHTML = '';
+      }
+    }
+
+    showQuestion();
+
+    function showQuestion() {
+  const currentQuestion = questions[currentQuestionIndex];
+  questionElement.textContent = currentQuestion.question;
+  optionsElement.innerHTML = '';
+  currentQuestion.options.forEach(option => {
+    const listItem = document.createElement('li'); // Create a list item
+    const button = document.createElement('button');
+    button.textContent = option;
+    button.classList.add('option');
+    button.onclick = () => checkAnswer(option);
+    listItem.appendChild(button); // Append the button to the list item
+    optionsElement.appendChild(listItem); // Append the list item to the options list
+  });
+}
+
+  </script>
+
+
+
+</body>
+</html>
+
